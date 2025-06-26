@@ -1,0 +1,154 @@
+############################################
+# Sistemas Operativos
+############################################
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+.Spotlight-V100
+.Trashes
+._*
+
+# Linux
+*~
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+############################################
+# Archivos Temporales y Logs
+############################################
+*.log
+log.txt
+*.tmp
+.tmp
+*.tmp.*
+testem.log
+libpeerconnection.log
+*.pid
+
+############################################
+# Archivos de Paquetes y Binarios
+############################################
+*.7z
+*.cab
+*.class
+*.com
+*.csv
+*.dat
+*.dll
+*.dmg
+*.exe
+*.gz
+*.iso
+*.jar
+*.msi
+*.msm
+*.msp
+*.o
+*.out
+*.rar
+*.seed
+*.so
+*.swo
+*.swp
+*.swn
+*.swm
+*.tar
+*.zip
+
+############################################
+# Archivos de Base de Datos
+############################################
+*.sql
+*.sqlite
+*.sqlite3
+
+############################################
+# Entornos de Desarrollo
+############################################
+
+# Node
+Frontend/node_modules
+Frontend/npm-debug.log
+Frontend/yarn-error.log
+Frontend/.pnp.*
+Frontend/.node_history
+Frontend/lib-cov
+Frontend/lcov.info
+Frontend/logs
+Frontend/results
+Frontend/pids
+
+# Yarn (Berry)
+/.yarn/*
+!.yarn/cache
+!.yarn/unplugged
+!.yarn/patches
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# Angular/Ionic
+Frontend/.angular
+Frontend/.angular/cache
+Frontend/.ionic
+Frontend/.nx
+Frontend/.nx/cache
+Frontend/.sourcemaps
+Frontend/.versions
+Frontend/dist
+Frontend/tmp
+Frontend/out-tsc
+Frontend/bazel-out
+Frontend/www
+Frontend/platforms
+Frontend/plugins
+Frontend/coverage
+Frontend.tsbuildinfo
+
+# Visual Studio Code
+Frontend/.vscode/*
+Frontend/!.vscode/tasks.json
+Frontend/!.vscode/launch.json
+Frontend/!.vscode/extensions.json
+Frontend/!.vscode/settings.json
+
+# Otros IDEs
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-project
+*.sublime-workspace
+nbproject
+
+############################################
+# Strapi
+############################################
+backend/.env
+backend/.strapi
+backend/.strapi-updater.json
+backend/.strapi-cloud.json
+backend/license.txt
+backend/exports
+backend/build
+backend/dist
+
+############################################
+# Otros
+############################################
+UserInterfaceState.xcuserstate
+connect.lock
+ssl
+.history/*
+public/uploads/*
+!public/uploads/.gitkeep
+.eslintcache

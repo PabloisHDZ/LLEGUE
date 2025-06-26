@@ -1,0 +1,60 @@
+{
+  "kind": "collectionType",
+  "collectionName": "personas_autorizadas",
+  "info": {
+    "singularName": "personas-autorizada",
+    "pluralName": "personas-autorizadas",
+    "displayName": "Personas Autorizada "
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nombre": {
+      "type": "string",
+      "required": true
+    },
+    "telefono": {
+      "type": "string",
+      "unique": true
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "personas_autorizada"
+    },
+    "estado": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "Activo,",
+        "Inactivo"
+      ]
+    },
+    "aviso": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::aviso.aviso",
+      "mappedBy": "personas_autorizada"
+    },
+    "Credencial": {
+      "type": "media",
+      "multiple": true,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "estudiantes": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::estudiante.estudiante",
+      "mappedBy": "personas_autorizadas"
+    }
+  }
+}

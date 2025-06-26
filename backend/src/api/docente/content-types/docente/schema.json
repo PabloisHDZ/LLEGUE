@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "docentes",
+  "info": {
+    "singularName": "docente",
+    "pluralName": "docentes",
+    "displayName": "Docente"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nombre": {
+      "type": "string"
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "docente"
+    },
+    "estudiantes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::estudiante.estudiante",
+      "mappedBy": "docente"
+    }
+  }
+}

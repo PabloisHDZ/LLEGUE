@@ -1,0 +1,45 @@
+{
+  "kind": "collectionType",
+  "collectionName": "estudiantes",
+  "info": {
+    "singularName": "estudiante",
+    "pluralName": "estudiantes",
+    "displayName": "Estudiante"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nombre": {
+      "type": "string",
+      "required": true
+    },
+    "grado": {
+      "type": "string",
+      "required": true
+    },
+    "grupo": {
+      "type": "string",
+      "required": true
+    },
+    "docente": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::docente.docente",
+      "inversedBy": "estudiantes"
+    },
+    "personas_autorizadas": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::personas-autorizada.personas-autorizada",
+      "inversedBy": "estudiantes"
+    },
+    "avisos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::aviso.aviso",
+      "mappedBy": "estudiante"
+    }
+  }
+}
