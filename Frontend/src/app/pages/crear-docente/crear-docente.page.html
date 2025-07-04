@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Registrar Docente</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Nuevo Docente</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="stacked">Nombre</ion-label>
+        <ion-input [(ngModel)]="nombre" required></ion-input>
+      </ion-item>
+
+      <ion-button expand="block" (click)="guardar()">Guardar</ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

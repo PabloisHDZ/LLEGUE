@@ -1,0 +1,60 @@
+/* Global Styles */
+:host {
+--ion-background-color: rgb (9, 7, 26);}
+
+
+
+ion-content {
+  background-color: #D02F2A; /* Color deshabilitado as background */
+}
+
+.login-card {
+  background-color: white;
+  border-radius: 8px;
+  padding: 16px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.input-item {
+  margin-bottom: 16px;
+}
+
+.input-field {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px; /* Paragraph size */
+}
+
+ion-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px; /* H3 size */
+}
+
+.login-button {
+  --background: #800000; /* Color primario */
+  --background-hover: #990000; /* Primario hover */
+  --background-activated: #660000; /* Secundario */
+  --color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px; /* H3 size */
+  height: 48px;
+  margin-top: 16px;
+}
+
+.login-button:hover {
+  --background: #990000; /* Primario hover */
+}
+
+.login-button:disabled {
+  --background: #D02F2A; /* Deshabilitado */
+}
+
+ion-toolbar {
+  --background: #800000; /* Color primario */
+  --color: white;
+}
+
+ion-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 40px; /* H1 size */
+  font-weight: bold;
+}

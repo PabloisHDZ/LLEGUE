@@ -1,0 +1,35 @@
+<ion-header> <ion-toolbar> <ion-title>Lista de Estudiantes</ion-title> </ion-toolbar> </ion-header> <ion-content class="ion-padding"> <ion-button routerLink="/crear-estudiante" expand="block" color="primary"> Agregar Estudiante </ion-button>
+<ion-grid *ngIf="estudiantes.length > 0">
+<ion-row>
+<ion-col size="12" size-md="6" size-lg="4" *ngFor="let est of estudiantes">
+<ion-card>
+<ion-card-header>
+<ion-card-title>{{ est.nombre }}</ion-card-title>
+<ion-card-subtitle>{{ est.grado }} - {{ est.grupo }}</ion-card-subtitle>
+
+<p><strong>Docente:</strong> {{ est.docente?.nombre || 'Sin asignar' }}</p> <p><strong>Personas Autorizadas:</strong></p> <ul> <li *ngFor="let pa of est.personas_autorizadas"> {{ pa.nombre }} </li> </ul>
+</ion-card-header>
+      <ion-card-content>
+        <p><strong>Docente:</strong> {{ est.attributes.docente?.data?.attributes?.nombre || 'Sin asignar' }}</p>
+        <p><strong>Personas Autorizadas:</strong></p>
+        <ul>
+          <li *ngFor="let pa of est.attributes.personas_autorizadas?.data || []">
+            {{ pa.attributes?.nombre }}
+          </li>
+        </ul>
+      </ion-card-content>
+
+      <ion-button expand="full" color="primary" [routerLink]="['/editar-estudiante', est.id]">
+        Editar
+      </ion-button>
+      <ion-button expand="full" color="danger" (click)="deleteEstudiante(est.id)">
+        Eliminar
+      </ion-button>
+    </ion-card>
+  </ion-col>
+</ion-row>
+</ion-grid>
+<ion-text *ngIf="estudiantes.length === 0">
+No hay estudiantes registrados.
+</ion-text>
+</ion-content>

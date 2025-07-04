@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Crear Estudiante</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label position="floating">Nombre</ion-label>
+    <ion-input [(ngModel)]="nombre" type="text" required></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Grado</ion-label>
+    <ion-input [(ngModel)]="grado" type="text" required></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Grupo</ion-label>
+    <ion-input [(ngModel)]="grupo" type="text" required></ion-input>
+  </ion-item>
+
+  <!-- <ion-item>
+    <ion-label>Docente</ion-label>
+    <ion-select [(ngModel)]="docenteId" placeholder="Selecciona un docente" required>
+       Opciones dinámicas desde una lista de docentes 
+      <ion-select-option *ngFor="let docente of docentes" [value]="docente.id">
+        {{ docente.nombre }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Personas Autorizadas</ion-label>
+    <ion-select [(ngModel)]="personasAutorizadasIds" multiple="true" placeholder="Selecciona personas autorizadas">
+       Opciones dinámicas desde una lista de personas autorizadas 
+      <ion-select-option *ngFor="let persona of personasAutorizadas" [value]="persona.id">
+        {{ persona.nombre }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item> -->
+
+  <!-- <ion-item>
+    <ion-label>Avisos</ion-label>
+    <ion-select [(ngModel)]="avisosIds" multiple="true" placeholder="Selecciona avisos">
+       Opciones dinámicas desde una lista de avisos 
+      <ion-select-option *ngFor="let aviso of avisos" [value]="aviso.id">
+        {{ aviso.titulo }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item> -->
+
+  <ion-button expand="block" (click)="guardar()">Guardar</ion-button>
+</ion-content>

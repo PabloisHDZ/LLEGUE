@@ -499,13 +499,11 @@ export interface ApiPersonasAutorizadaPersonasAutorizada
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Credencial: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios',
-      true
-    > &
+    Credencial: Schema.Attribute.Media<'images' | 'files'> &
       Schema.Attribute.Required;
-    estado: Schema.Attribute.Enumeration<['Activo,', 'Inactivo']> &
-      Schema.Attribute.Required;
+    estado: Schema.Attribute.Enumeration<['Activo', 'Inactivo']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Activo'>;
     estudiantes: Schema.Attribute.Relation<
       'manyToMany',
       'api::estudiante.estudiante'
