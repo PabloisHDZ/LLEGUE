@@ -7,7 +7,7 @@
     "displayName": "Docente"
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -25,6 +25,17 @@
       "relation": "oneToMany",
       "target": "api::estudiante.estudiante",
       "mappedBy": "docente"
+    },
+    "foto": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     }
   }
 }

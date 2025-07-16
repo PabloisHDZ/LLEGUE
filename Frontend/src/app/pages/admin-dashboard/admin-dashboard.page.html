@@ -1,40 +1,533 @@
 <ion-header>
+  <ion-toolbar style="text-align: center;">
+    <br>
+    <ion-title><b>Gestionar Registros</b></ion-title>
+
+   
+    <button class="btn btn-danger" style="float: right; padding: 6px; font-size: 14px; background-color: transparent; filter: invert();" (click)="cerrarSesion()" aria-label="Cerrar sesión">
+        <img src="assets/93627.png" alt="Logo" width="16" height="16"  viewBox="0 0 16 16" />
+     
+    </button>
+  </ion-toolbar>
+
+  <!-- Barra de segmentos para cambiar vistas -->
   <ion-toolbar>
-    <ion-title>Administrar Personas Autorizadas</ion-title>
+    <ion-segment [(ngModel)]="selectedSegment" color="danger" [disabled]="showCreateForm || editingUser || showCreatePersonaForm || showEditPersonaForm || showCreateEstudianteForm || showEditEstudianteForm">
+       <ion-segment-button value="estudiantes">
+        Estudiantes
+      </ion-segment-button>
+      <ion-segment-button value="usuarios">
+        Usuarios
+      </ion-segment-button>
+      <ion-segment-button value="docentes">
+        Docentes
+      </ion-segment-button>
+      <ion-segment-button value="personas">
+        Personas Autorizadas
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <ion-button routerLink="/crear-persona" expand="block">Agregar Persona Autorizada</ion-button>
-  <ion-button routerLink="/ver-docentes" expand="block">Ver Docentes</ion-button>
-  <ion-button routerLink="/ver-estudiantes" expand="block">Ver Estudiantes</ion-button>
-  
-  <ion-grid *ngIf="personas.length > 0">
-    <ion-row>
-      <ion-col size="12" size-md="6" size-lg="4" *ngFor="let persona of personas">
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>{{ persona.nombre }}</ion-card-title>
-            <ion-card-subtitle>Estado: {{ persona.estado }}</ion-card-subtitle>
-          </ion-card-header>
+<ion-content>
+  <div class="center-container">
+    <ion-card class="login-html">
+      <ion-card-content class="login-form">
+      
+       <ng-container *ngIf="selectedSegment === 'docentes'">
+  <ion-button expand="block" (click)="startCreateDocente()" *ngIf="!showCreateDocenteForm && !showEditDocenteForm" color="success">Crear Nuevo Docente</ion-button>
+  <ion-button expand="block" (click)="cancelDocenteForm()" *ngIf="showCreateDocenteForm || showEditDocenteForm">Cancelar</ion-button>
 
-          <ion-card-content>
-            <p>Teléfono: {{ persona.telefono }}</p>
+  <div *ngIf="docenteErrorMessage" class="error-message">{{ docenteErrorMessage }}</div>
 
-            <div *ngIf="persona.Credencial?.url" style="margin-top: 10px; text-align: center;">
-              <img [src]="'http://localhost:1337' + persona.Credencial.url" 
-                   style="max-width: 100%; height: auto; border-radius: 8px;" />
-            </div>
-          </ion-card-content>
+  <!-- Formulario Crear Docente -->
+  <form *ngIf="showCreateDocenteForm" (ngSubmit)="crearDocente()">
+    <ion-item>
+      <ion-label position="floating" style="color: black;">Nombre *</ion-label>
+      <ion-input [(ngModel)]="docenteNombre" name="docenteNombre" required style="color: black;"></ion-input>
+    </ion-item>
 
-          <ion-button expand="full" color="primary" [routerLink]="['/editar-persona', persona.id]">Editar</ion-button>
-          <ion-button expand="full" color="danger" (click)="deletePersona(persona.id)">Eliminar</ion-button>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+ 
+    <ion-item>
+      <ion-label style="color: black;">Usuario Relacionado</ion-label>
+      <ion-select [(ngModel)]="docenteUserId" name="docenteUserId" interface="popover" placeholder="Seleccione un usuario">
+        <ion-select-option *ngFor="let user of users" [value]="user.id" style="color: black;">
+          {{ user.username }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
 
-  <ion-text *ngIf="personas.length === 0">
-    No hay personas autorizadas registradas.
-  </ion-text>
+
+    <ion-item>
+      <ion-label style="color: black;">Estudiantes</ion-label>
+      <ion-select [(ngModel)]="docenteEstudiantesIds" name="docenteEstudiantesIds" interface="popover" multiple="true" placeholder="Seleccione estudiantes">
+        <ion-select-option *ngFor="let estudiante of estudiantes" [value]="estudiante.id" style="color: black;">
+          {{ estudiante.nombre }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+
+    <ion-item style="color: black;">
+      <ion-label>Foto</ion-label>
+      <input type="file" (change)="onDocenteFileSelected($event)" accept="image/*" />
+    </ion-item>
+
+ 
+    <ion-item *ngIf="docenteFotoUrl && !docenteFotoFile">
+      <ion-label style="color: black;">Foto actual:</ion-label>
+      <img [src]="docenteFotoUrl" alt="Foto docente" style="max-height: 100px;" />
+    </ion-item>
+
+    <ion-button expand="block" type="submit">Crear</ion-button>
+  </form>
+
+  <!-- Formulario Editar Docente -->
+  <form *ngIf="showEditDocenteForm" (ngSubmit)="editarDocente()">
+    <ion-item>
+      <ion-label position="floating" style="color: black;">Nombre *</ion-label>
+      <ion-input [(ngModel)]="docenteNombre" name="docenteNombre" required></ion-input>
+    </ion-item>
+
+    <!-- Selección Usuario Relacionado -->
+    <ion-item>
+      <ion-label style="color: black;">Usuario Relacionado</ion-label>
+      <ion-select [(ngModel)]="docenteUserId" name="docenteUserId" interface="popover" placeholder="Seleccione un usuario">
+        <ion-select-option *ngFor="let user of users" [value]="user.id" style="color: black;">
+          {{ user.username }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Selección Estudiantes (múltiple) -->
+    <ion-item>
+      <ion-label style="color: black;">Estudiantes</ion-label>
+      <ion-select [(ngModel)]="docenteEstudiantesIds" name="docenteEstudiantesIds" interface="popover" multiple="true" placeholder="Seleccione estudiantes">
+        <ion-select-option *ngFor="let estudiante of estudiantes" [value]="estudiante.id" style="color: black;">
+          {{ estudiante.nombre }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Upload Foto -->
+    <ion-item>
+      <ion-label>Foto</ion-label>
+      <input type="file" (change)="onDocenteFileSelected($event)" accept="image/*" />
+    </ion-item>
+
+    <!-- Mostrar foto actual si existe y no se ha seleccionado nueva -->
+    <ion-item *ngIf="docenteFotoUrl && !docenteFotoFile">
+      <ion-label style="color: black;">Foto actual:</ion-label>
+      <img [src]="docenteFotoUrl" alt="Foto docente" style="max-height: 100px;" />
+    </ion-item>
+
+    <ion-button expand="block" type="submit">Actualizar</ion-button>
+  </form>
+
+  <!-- Lista de docentes -->
+  <ion-list *ngIf="!showCreateDocenteForm && !showEditDocenteForm">
+    <ion-item *ngFor="let docente of docentes">
+      <ion-label>
+     <h2 style="color: black;">{{ docente.nombre }}</h2>
+
+      <!-- Mostrar usuario relacionado -->
+      <p *ngIf="docente.users_permissions_user" style="color: black;">
+        Usuario: {{ docente.users_permissions_user.username || docente.users_permissions_user.email || 'N/A' }}
+      </p>
+
+      <!-- Mostrar estudiantes relacionados -->
+      <p *ngIf="docente.estudiantes && docente.estudiantes.length > 0" style="color: black;">
+        Estudiantes:
+        <span *ngFor="let est of docente.estudiantes; let last = last">
+          {{ est.nombre }}<span *ngIf="!last">, </span>
+        </span>
+      </p>
+
+      <!-- Mostrar foto -->
+      <img *ngIf="docente.foto?.url" [src]="'http://localhost:1337' + docente.foto.url" alt="Foto docente" style="max-height: 80px; margin-top: 5px;" />
+      </ion-label>
+      <ion-button slot="end" color="primary" (click)="startEditDocente(docente)">Editar</ion-button>
+      <ion-button slot="end" color="danger" (click)="deleteDocente(docente.documentId)">Eliminar</ion-button>
+    </ion-item>
+  </ion-list>
+</ng-container>
+
+
+
+<!-- VISTA DE ESTUDIANTES -->
+
+
+        <ng-container *ngIf="selectedSegment === 'estudiantes'">
+
+          <ion-button expand="block" (click)="startCreateEstudiante()" *ngIf="!showCreateEstudianteForm && !showEditEstudianteForm" color="success">Crear Nuevo Estudiante</ion-button>
+          <ion-button expand="block" (click)="cancelEstudianteForm()" *ngIf="showCreateEstudianteForm || showEditEstudianteForm">Cancelar</ion-button>
+
+
+             <!-- Lista de estudiantes -->
+          <ion-list *ngIf="!showCreateEstudianteForm && !showEditEstudianteForm" size="12" size-md="6" size-lg="4">
+            <ion-item *ngFor="let estudiante of estudiantes">
+              <ion-label>
+                <h2 style="color: black;">{{ estudiante.nombre }}</h2>
+                <p style="color: black;">Grado: {{ estudiante.grado }}</p>
+                <p style="color: black;">Grupo: {{ estudiante.grupo }}</p>
+              </ion-label>
+              <ion-button slot="end" color="primary" (click)="startEditEstudiante(estudiante)">Editar</ion-button>
+              <ion-button slot="end" color="danger" (click)="deleteEstudiante(estudiante.documentId)">Eliminar</ion-button>
+            </ion-item>
+          </ion-list>
+
+
+          <div *ngIf="estudianteErrorMessage" class="error-message">{{ estudianteErrorMessage }}</div>
+
+          <!-- Formulario Crear Estudiante -->
+          <form *ngIf="showCreateEstudianteForm" (ngSubmit)="crearEstudiante()">
+            <ion-item>
+              <ion-label position="floating" style="color: black;">Nombre *</ion-label>
+              <ion-input [(ngModel)]="estudianteNombre" name="estudianteNombre" required></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating" style="color: black;">Grado *</ion-label>
+              <ion-input [(ngModel)]="estudianteGrado" name="estudianteGrado" required></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating" style="color: black;">Grupo *</ion-label>
+              <ion-input [(ngModel)]="estudianteGrupo" name="estudianteGrupo" required></ion-input>
+            </ion-item>
+
+            <!-- Selección de Docente -->
+<ion-item>
+  <ion-label style="color: black;">Docente</ion-label>
+  <ion-select [(ngModel)]="estudianteDocenteId" name="estudianteDocenteId" interface="popover" placeholder="Seleccione un docente">
+    <ion-select-option *ngFor="let docente of docentes" [value]="docente.id" style="color: black;">
+      {{ docente.nombre }}
+    </ion-select-option>
+  </ion-select>
+</ion-item>
+
+<!-- Selección de Personas Autorizadas (múltiple) -->
+<ion-item>
+  <ion-label style="color: black;">Personas Autorizadas</ion-label>
+  <ion-select [(ngModel)]="estudiantePersonasAutorizadasIds" name="estudiantePersonasAutorizadasIds" interface="popover" multiple="true" placeholder="Seleccione personas autorizadas">
+    <ion-select-option *ngFor="let persona of personas" [value]="persona.id" style="color: black;">
+      {{ persona.nombre }}
+    </ion-select-option>
+  </ion-select>
+</ion-item>
+
+<!-- Selección de Avisos (múltiple) -->
+<ion-item>
+  <ion-label style="color: black;">Avisos</ion-label>
+  <ion-select [(ngModel)]="estudianteAvisosIds" name="estudianteAvisosIds" interface="popover" multiple="true" placeholder="Seleccione avisos">
+    <ion-select-option *ngFor="let aviso of avisos" [value]="aviso.id" style="color: black;">
+      {{ aviso.titulo }}
+    </ion-select-option>
+  </ion-select>
+</ion-item>
+
+
+           
+          </form>
+
+          <!-- Formulario Editar Estudiante -->
+          <form *ngIf="showEditEstudianteForm" (ngSubmit)="editarEstudiante()">
+            <ion-item>
+              <ion-label position="floating" style="color: black;">Nombre *</ion-label>
+              <ion-input [(ngModel)]="estudianteNombre" name="estudianteNombre" style="color: black;" required></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating" style="color: black;">Grado *</ion-label>
+              <ion-input [(ngModel)]="estudianteGrado" name="estudianteGrado" style="color: black;" required></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating" style="color: black;">Grupo *</ion-label>
+              <ion-input [(ngModel)]="estudianteGrupo" name="estudianteGrupo" style="color: black;" required></ion-input>
+            </ion-item>
+
+            <!-- Selección de Docente -->
+<ion-item>
+  <ion-label style="color: black;">Docente</ion-label>
+  <ion-select [(ngModel)]="estudianteDocenteId" name="estudianteDocenteId" interface="popover" placeholder="Seleccione un docente">
+    <ion-select-option *ngFor="let docente of docentes" [value]="docente.id" style="color: black;">
+      {{ docente.nombre }}
+    </ion-select-option>
+  </ion-select>
+</ion-item>
+
+<!-- Selección de Personas Autorizadas (múltiple) -->
+<ion-item style="color: black;">
+  <ion-label>Personas Autorizadas</ion-label>
+  <ion-select [(ngModel)]="estudiantePersonasAutorizadasIds" name="estudiantePersonasAutorizadasIds" interface="popover" multiple="true" placeholder="Seleccione personas autorizadas">
+    <ion-select-option *ngFor="let persona of personas" [value]="persona.id" >
+      {{ persona.nombre }}
+    </ion-select-option>
+  </ion-select>
+</ion-item>
+
+<!-- Selección de Avisos (múltiple) -->
+<ion-item style="color: black;">
+  <ion-label>Avisos</ion-label>
+  <ion-select [(ngModel)]="estudianteAvisosIds" name="estudianteAvisosIds" interface="popover" multiple="true" placeholder="Seleccione avisos">
+    <ion-select-option *ngFor="let aviso of avisos" [value]="aviso.id">
+      {{ aviso.titulo }}
+    </ion-select-option>
+  </ion-select>
+</ion-item>
+
+
+            <ion-button expand="block" type="submit">Actualizar</ion-button>
+          </form>
+
+       
+        </ng-container>
+        
+
+        <!-- VISTA DE USUARIOS -->
+        <ng-container *ngIf="selectedSegment !== 'personas' && selectedSegment !== 'estudiantes' && selectedSegment !== 'docentes'">
+         
+          <!-- Lista de usuarios con ion-grid para responsividad -->
+          <ion-list *ngIf="!showCreateForm && !editingUser">
+            <br><br><br><br>
+          <ion-button expand="block" (click)="showCreateForm = true" color="success">Crear Nuevo Usuario</ion-button>
+
+            <ion-item *ngFor="let user of filteredUsers">
+
+              <ion-grid>
+                <ion-row class="ion-align-items-center">
+                  <ion-col size="12" size-md="6" size-lg="4" class="user-info-col">
+                    <h2>{{ user.username }}</h2>
+                    <p>Email: {{ user.email }}</p>
+                    <p>Rol: {{ user.role?.name }}</p>
+                  </ion-col>
+                  <ion-col size="6" size-md="3">
+                    <ion-button expand="block" color="primary" (click)="startEdit(user)">Editar</ion-button>
+                  </ion-col>
+                  <ion-col size="6" size-md="3">
+                    <ion-button expand="block" color="danger" (click)="deleteUser(user.id)">Eliminar</ion-button>
+                  </ion-col>
+                 
+                </ion-row>
+              </ion-grid>
+                
+            </ion-item>
+          </ion-list>
+
+          <!-- FORMULARIO DE CREACIÓN -->
+          <div *ngIf="showCreateForm" class="create-form">
+            <h3>Crear Nuevo Usuario</h3>
+            <ion-item class="input-item" style="color: black;">
+              <ion-label position="floating">Username</ion-label>
+              <ion-input [(ngModel)]="newUser.username"></ion-input>
+            </ion-item>
+
+            <ion-item class="input-item" style="color: black;">
+              <ion-label position="floating">Email</ion-label>
+              <ion-input [(ngModel)]="newUser.email" type="email"></ion-input>
+            </ion-item>
+
+            <ion-item class="input-item" style="color: black;">
+              <ion-label position="floating">Contraseña</ion-label>
+              <ion-input [(ngModel)]="newUser.password" type="password"></ion-input>
+            </ion-item>
+
+            <ion-item class="input-item" style="color: black;">
+              <ion-label>Rol</ion-label>
+              <ion-select [(ngModel)]="newUser.roleId" interface="popover">
+                <ion-select-option *ngFor="let role of roles" [value]="role.id">
+                  {{ role.name }}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-button color="success" (click)="createUser()" shape="round">Crear</ion-button>
+            <ion-button color="medium" (click)="cancelCreate()" shape="round">Cancelar</ion-button>
+          </div>
+
+          <!-- Formulario de edición simple -->
+          <div *ngIf="editingUser" class="edit-form">
+            <h3 style="color: black;">Editando usuario: {{ editingUser.username }}</h3>
+            <ion-item class="input-item" style="color: black;">
+              <ion-label position="floating">Username</ion-label>
+              <ion-input [(ngModel)]="editingUser.username"></ion-input>
+            </ion-item>
+            <ion-item class="input-item" style="color: black;">
+              <ion-label position="floating">Email</ion-label>
+              <ion-input [(ngModel)]="editingUser.email" type="email"></ion-input>
+            </ion-item>
+            <ion-item class="input-item" style="color: black;">
+              <ion-label position="floating">Rol (ID)</ion-label>
+              <ion-input [(ngModel)]="editingUser.roleId" type="number"></ion-input>
+            </ion-item>
+            <ion-item class="input-item" style="color: black;">
+              <ion-label style="color: black;">Rol</ion-label>
+              <ion-select [(ngModel)]="editingUser.roleId" interface="popover">
+                <ion-select-option *ngFor="let role of roles" [value]="role.id">
+                  {{ role.name }}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-button color="danger" class="login-button" (click)="saveEdit()" shape="round">Guardar</ion-button>
+            <ion-button color="danger" class="login-button" (click)="cancelEdit()" shape="round">Cancelar</ion-button>
+          </div>
+        </ng-container>
+
+        <!-- VISTA DE PERSONAS AUTORIZADAS -->
+        <ng-container *ngIf="selectedSegment === 'personas'">
+          <ion-button expand="block" (click)="startCreatePersona()" *ngIf="!showCreatePersonaForm && !showEditPersonaForm" color="success">Crear Nueva Persona</ion-button>
+          <ion-button expand="block" (click)="cancelPersonaForm()" *ngIf="showCreatePersonaForm || showEditPersonaForm">Cancelar</ion-button>
+
+          <div *ngIf="personaErrorMessage" class="error-message">{{ personaErrorMessage }}</div>
+
+          <!-- Formulario Crear Persona -->
+          <form *ngIf="showCreatePersonaForm" (ngSubmit)="crearPersona()">
+            <ion-item>
+              <ion-label position="floating" style="color: black;">Nombre *</ion-label>
+              <ion-input [(ngModel)]="personaNombre" name="personaNombre" required></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating" style="color: black;">Teléfono</ion-label>
+              <ion-input [(ngModel)]="personaTelefono" name="personaTelefono" type="tel"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label style="color: black;">Estado *</ion-label>
+              <ion-select [(ngModel)]="personaEstado" name="personaEstado" interface="popover" required>
+                <ion-select-option *ngFor="let e of estados" [value]="e">{{ e }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item>
+  <ion-label style="color: black;">Usuario Relacionado</ion-label>
+  <ion-select [(ngModel)]="personaUserId" name="personaUserId" interface="popover" placeholder="Seleccione un usuario">
+    <ion-select-option *ngFor="let user of users" [value]="user.id" style="color: black;">
+      {{ user.username }}
+    </ion-select-option>
+  </ion-select>
+</ion-item>
+
+<ion-item>
+  <ion-label style="color: black;">Estudiantes</ion-label>
+  <ion-select [(ngModel)]="personaEstudiantesIds" name="personaEstudiantesIds" interface="popover" multiple="true" placeholder="Seleccione estudiantes">
+    <ion-select-option *ngFor="let estudiante of estudiantes" [value]="estudiante.id" style="color: black;">
+      {{ estudiante.nombre }}
+    </ion-select-option>
+  </ion-select>
+</ion-item>
+
+
+            <ion-item>
+              <ion-label>Credencial (media) *</ion-label>
+              <input type="file" (change)="onPersonaFileSelected($event)" accept="image/*" />
+            </ion-item>
+
+            <ion-button expand="block" type="submit" [disabled]="personaLoading">Crear</ion-button>
+          </form>
+
+          <!-- Formulario Editar Persona -->
+          <form *ngIf="showEditPersonaForm" (ngSubmit)="editarPersona()">
+            <ion-item>
+              <ion-label position="floating" style="color: black;">Nombre *</ion-label>
+              <ion-input [(ngModel)]="personaNombre" name="personaNombre" style="color: black;" required></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating" style="color: black;">Teléfono</ion-label>
+              <ion-input [(ngModel)]="personaTelefono" name="personaTelefono" style="color: black;" type="tel"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label style="color: black;">Estado *</ion-label>
+              <ion-select [(ngModel)]="personaEstado" name="personaEstado" style="color: black;" interface="popover" required>
+                <ion-select-option *ngFor="let e of estados" [value]="e">{{ e }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item>
+  <ion-label style="color: black;">Usuario Relacionado</ion-label>
+  <ion-select [(ngModel)]="personaUserId" name="personaUserId" interface="popover" placeholder="Seleccione un usuario">
+    <ion-select-option *ngFor="let user of users" [value]="user.id" style="color: black;">
+      {{ user.username }}
+    </ion-select-option>
+  </ion-select>
+</ion-item>
+
+<ion-item>
+  <ion-label style="color: black;">Estudiantes</ion-label>
+  <ion-select [(ngModel)]="personaEstudiantesIds" name="personaEstudiantesIds" interface="popover" multiple="true" placeholder="Seleccione estudiantes">
+    <ion-select-option *ngFor="let estudiante of estudiantes" [value]="estudiante.id" style="color: black;">
+      {{ estudiante.nombre }}
+    </ion-select-option>
+  </ion-select>
+</ion-item>
+
+
+            <ion-item *ngIf="personaCredencialUrl && !personaCredencialFile">
+              <ion-label style="color: black;">Archivo actual:</ion-label>
+              <img [src]="'http://localhost:1337' + personaCredencialUrl" alt="Credencial" style="max-height: 100px;" />
+            </ion-item>
+
+            <ion-item>
+              <ion-label>Credencial (media)</ion-label>
+              <input type="file" (change)="onPersonaFileSelected($event)" accept="image/*" />
+            </ion-item>
+
+            <ion-button expand="block" type="submit" [disabled]="personaLoading">Actualizar</ion-button>
+          </form>
+
+          <!-- Lista de personas -->
+          <ion-list *ngIf="!showCreatePersonaForm && !showEditPersonaForm" size="12" size-md="6" size-lg="4">
+            <ion-item *ngFor="let persona of personas">
+              <ion-label size="12" size-md="6" size-lg="4" >
+                <h2 style="color: black;">{{ persona.nombre }} ({{ persona.estado }})</h2>
+                <p style="color: black;" >Teléfono: {{ persona.telefono || 'N/A' }}</p>
+                <p style="color: black;" >Estudiantes vinculados: {{ persona.estudiantes?.join(', ') || 'Ninguno' }}</p>
+                <p style="color: black;" >Usuario: {{ persona.usuario }}</p>
+                <p style="color: black;" >Aviso: {{ persona.avisoTitulo }}</p>
+               <p *ngIf="persona.users_permissions_user" style="color: black;">
+        Usuario: {{ persona.users_permissions_user.username || persona.users_permissions_user.email || 'N/A' }}
+      </p>
+      <p *ngIf="persona.estudiantes && persona.estudiantes.length > 0" style="color: black;">
+        Estudiantes:   <span *ngFor="let est of persona.estudiantes; let last = last" style="color: black;">
+          {{ est.nombre }}<span *ngIf="!last" style="color: black;">, </span> </span>
+      </p>
+                <img *ngIf="persona.credencialUrl" [src]="'http://localhost:1337' + persona.credencialUrl" style="max-height: 100px;" />
+              </ion-label>
+            
+              <ion-button slot="end" color="primary" (click)="startEditPersona(persona)">Editar</ion-button>
+            <ion-button slot="end" color="danger" (click)="deletePersona(persona.documentId)">Eliminar</ion-button>
+            </ion-item>
+          </ion-list>
+        </ng-container>
+
+        <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar class="bottom-toolbar">
+    <ion-buttons class="bottom-menu" slot="start">
+      <ion-button routerLink="/home">
+        <ion-icon slot="icon-only" name="home-outline" ></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon slot="icon-only" name="people-outline"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon slot="icon-only" name="person-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
+<style>
+  
+</style>

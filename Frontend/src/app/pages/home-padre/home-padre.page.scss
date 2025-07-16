@@ -1,0 +1,109 @@
+:host {
+  --ion-background-color: transparent; 
+}
+
+ion-content {
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  height: 100vh;
+  background-color: white;
+}
+
+.center-container {
+  height: 100%;
+  display: flex;
+  justify-content: center; 
+  align-items: center;    
+  padding: 0 15px;         
+  box-sizing: border-box;
+}
+
+.login-html {
+  max-width: 525px;
+  width: 100%;
+  min-height: 570px;
+  background-color: white;
+  box-shadow: 0 12px 15px 0 rgb(56, 53, 53), 0 17px 50px 0 rgba(0,0,0,.19);
+  border-radius: 15px;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background: rgba(255, 255, 255, 0.9);
+  padding: 60px 40px 40px 40px;
+  color: #fff;
+  box-sizing: border-box;
+  border-radius: 15px;
+}
+
+.label {
+  color: #ffffff;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 1px;
+  font-family: 'Montserrat';
+}
+
+ion-item.input-item {
+  --border-color: rgba(255, 255, 255, 0.3);
+  --border-style: solid;
+  --background: white;
+  --background-color: rgb(124, 0, 0);
+  --border-width: 1px;
+  --border-radius: 10px;
+  --padding-start: 20px;
+  --padding-end: 20px;
+  --min-height: 50px;
+  --transform-style: preserve-3d;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  color: #fff;
+  border: 2px;
+  border-width: 5px;
+  border-radius: 10px;
+  --box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4), 0 4px 6px rgba(0, 0, 0, 0.3);
+  --text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+  --transform: translateZ(10px);
+  --transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+ion-item.input-item {
+  box-shadow: 0 12px 25px rgba(77, 0, 0, 0.6), 0 6px 10px rgba(105, 1, 1, 0.4);
+  transform: translateZ(10px);
+}
+ion-item.input-item:hover {
+  box-shadow: 0 12px 25px rgba(77, 0, 0, 0.6), 0 6px 10px rgba(105, 1, 1, 0.4);
+  transform: translateZ(10px);
+}
+
+.bottom-menu ion-button {
+    --color: #fff;
+    font-size: 28px;
+    flex: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    
+  }
+
+   .bottom-menu {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 30px;
+  }
+  
+ion-toolbar {
+  --background: #6e0000 !important;
+    justify-content: center; 
+  align-items: center;    
+}

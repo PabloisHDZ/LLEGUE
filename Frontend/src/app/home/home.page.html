@@ -1,20 +1,120 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+<div *ngIf="userRole === 'Authenticated'" class="container authorized-person">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-grid class="container-grid">
+    <ion-row class="ion-justify-content-center ion-align-items-center">
+      <ion-col size="12" size-md="8" size-lg="6" class="ion-text-center">
+      
+        <h1 class="title">Ya llegué</h1>
+        <br><br><br>
+        <img src="assets/school.png" alt="Logo" class="responsive-image" />
+      </ion-col>
+    </ion-row>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+    <ion-row class="ion-justify-content-center buttons-row">
+      <ion-col size="12" size-md="8" size-lg="6">
+        <ion-button expand="block" routerLink="/admin-dashboard">
+          Gestionar Registros
+        </ion-button>
+
+        <ion-button expand="block" routerLink="/home-docente">
+          Monitoreo de avisos
+        </ion-button>
+
+        <ion-button expand="block" routerLink="/home-padre">
+          Gestión de dispositivos
+        </ion-button>
+
+    <ion-button   (click)="cerrarSesion()" aria-label="Cerrar sesión">Cerrar Sesión</ion-button>
+    
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
+
+
+
+
+<div *ngIf="userRole === 'Docente'" class="container authorized-person">
+
+  <ion-grid class="container-grid">
+    <ion-row class="ion-justify-content-center ion-align-items-center">
+      <ion-col size="12" size-md="8" size-lg="6" class="ion-text-center">
+      
+        <h1 class="title">Ya llegué</h1>
+        <br><br><br>
+        <img src="assets/school.png" alt="Logo" class="responsive-image" />
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center buttons-row">
+      <ion-col size="12" size-md="8" size-lg="6">
+        <ion-button expand="block" routerLink="/home-docente">
+          Listado de Estudiantes
+        </ion-button>
+
+        <ion-button expand="block" routerLink="/home-docente">
+          Historial de Avisos
+        </ion-button>
+
+           <ion-button expand="block" routerLink="/home-docente">
+          Alertas en tiempo real
+        </ion-button>
+
+        <ion-button expand="block" routerLink="/home-padre">
+          Perfil
+        </ion-button>
+
+    <ion-button   (click)="cerrarSesion()" aria-label="Cerrar sesión">Cerrar Sesión</ion-button>
+    
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
+
+
+
+<div *ngIf="userRole === 'Persona Autorizada'" class="container authorized-person">
+
+  <ion-grid class="container-grid">
+    <ion-row class="ion-justify-content-center ion-align-items-center">
+      <ion-col size="12" size-md="8" size-lg="6" class="ion-text-center">
+      
+        <h1 class="title">Ya lleguée</h1>
+        <br><br><br>
+        <img src="assets/school.png" alt="Logo" class="responsive-image" />
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center buttons-row">
+      <ion-col size="12" size-md="8" size-lg="6">
+        <ion-button expand="block" routerLink="/home-padre">
+          Listado de Estudiantes
+        </ion-button>
+
+        <ion-button expand="block" routerLink="/home-docente">
+          Historial de Avisos
+        </ion-button>
+
+           <ion-button expand="block" routerLink="/home-docente">
+          Alertas en tiempo real
+        </ion-button>
+
+        <ion-button expand="block" routerLink="/home-padre">
+          Perfil
+        </ion-button>
+
+    <ion-button   (click)="cerrarSesion()" aria-label="Cerrar sesión">Cerrar Sesión</ion-button>
+    
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
+
+
+
 </ion-content>
+
+<style>
+
+</style>

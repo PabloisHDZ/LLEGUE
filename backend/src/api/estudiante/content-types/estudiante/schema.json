@@ -7,7 +7,7 @@
     "displayName": "Estudiante"
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -40,6 +40,17 @@
       "relation": "oneToMany",
       "target": "api::aviso.aviso",
       "mappedBy": "estudiante"
+    },
+    "foto": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     }
   }
 }

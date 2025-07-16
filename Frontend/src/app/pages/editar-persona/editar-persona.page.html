@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Editar Persona Autorizada</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-label position="floating">Nombre</ion-label>
+    <ion-input [(ngModel)]="nombre"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Teléfono</ion-label>
+    <ion-input [(ngModel)]="telefono"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Estado</ion-label>
+    <ion-select [(ngModel)]="estado">
+      <ion-select-option value="Activo">Activo</ion-select-option>
+      <ion-select-option value="Inactivo">Inactivo</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Credencial Actual</ion-label>
+  </ion-item>
+  <div *ngIf="imagenActualUrl" style="text-align: center; margin: 10px 0;">
+    <img [src]="imagenActualUrl" style="width: 100%; max-width: 250px; border-radius: 8px;" />
+  </div>
+
+  <ion-item>
+    <ion-label>Cambiar Credencial</ion-label>
+    <input type="file" accept="image/*" (change)="onFileChange($event)" />
+  </ion-item>
+
+  <ion-button expand="block" (click)="guardarCambios()">Guardar Cambios</ion-button>
+</ion-content>

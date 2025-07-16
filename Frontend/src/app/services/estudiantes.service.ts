@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
 import { environment } from '../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EstudiantesService {
   private apiUrl = `${environment.apiUrl}/estudiantes`;
-
-  constructor() {}
+  private baseUrl = 'http://localhost:1337/api/estudiantes';
+  constructor(private http: HttpClient) {}
 
   create(data: any, token: string) {
     return axios.post(this.apiUrl, { data }, {
@@ -49,4 +50,41 @@ export class EstudiantesService {
       }
     });
   }
+
+
+
+
+getEstudiantesPorPersonaAutorizada(): Promise<any[]> {
+  return this.http.get<any[]>(`${this.baseUrl}/por-persona-autorizada`).toPromise()
+    .then(res => res ?? []);
+}
+
+
+getEstudiantesPorDocente(): Promise<any[]> {
+  return this.http.get<any[]>(`${this.baseUrl}/por-docente`).toPromise()
+    .then(res => res ?? []);
+}
+
+getGradosDisponibles(): Promise<string[]> {
+  return this.http.get<string[]>(`${this.baseUrl}/grados`).toPromise()
+    .then(res => res ?? []);
+}
+
+
+getTodosEstudiantes(): Promise<any[]> {
+  return this.http.get<any[]>(`${this.baseUrl}`).toPromise()
+    .then(res => res ?? []);
+}
+
+  // Asignar estudiante a persona autorizada
+  asignarEstudianteAPersonaAutorizada(estudianteId: string, personaAutorizadaId: string) {
+    return this.http.post(`${this.baseUrl}/asignar`, {
+      estudianteId,
+      personaAutorizadaId
+    }).toPromise();
+  }
+
+
+
+
 }

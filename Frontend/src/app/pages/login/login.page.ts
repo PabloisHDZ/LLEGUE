@@ -11,6 +11,7 @@ import { AuthService } from '../../services/auth.service';
 export class LoginPage {
   identifier = '';
   password = '';
+  showPassword = false
 
   constructor(
     private authService: AuthService,
@@ -20,21 +21,21 @@ export class LoginPage {
 
   async login() {
     try {
-      // 1. Login y guardar token
+     
       await this.authService.login(this.identifier, this.password);
 
-      // 2. Obtener usuario actual con su rol
+     
       const user = await this.authService.getCurrentUser();
       const role = user.role?.name;
       console.log('Rol recibido:', role);
 
-      // 3. Redirigir según el rol
-      if (role === 'Authenticated') {
-        this.navCtrl.navigateRoot('/admin-dashboard');
-      } else if (role === 'Personas Autorizadas') {
-        this.navCtrl.navigateRoot('/home-padre');
+   
+        if (role === 'Authenticated') {
+        this.navCtrl.navigateRoot('/home');
+      } else if (role === 'Persona Autorizada') {
+        this.navCtrl.navigateRoot('/home');
       } else if (role === 'Docente') {
-        this.navCtrl.navigateRoot('/home-docente');
+        this.navCtrl.navigateRoot('/home');
       } else {
         throw new Error(`Rol no reconocido: ${role}`);
       }
@@ -47,5 +48,9 @@ export class LoginPage {
       });
       await alert.present();
     }
+  }
+
+   togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }

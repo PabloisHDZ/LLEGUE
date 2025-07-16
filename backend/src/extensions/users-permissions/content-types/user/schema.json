@@ -77,6 +77,10 @@
       "relation": "oneToOne",
       "target": "api::personas-autorizada.personas-autorizada",
       "mappedBy": "users_permissions_user"
+    },
+    "token": {
+      "type": "text",
+      "required": true
     }
   }
 }

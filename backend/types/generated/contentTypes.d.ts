@@ -381,7 +381,7 @@ export interface ApiAvisoAviso extends Struct.CollectionTypeSchema {
     singularName: 'aviso';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
@@ -419,7 +419,7 @@ export interface ApiDocenteDocente extends Struct.CollectionTypeSchema {
     singularName: 'docente';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
@@ -429,6 +429,8 @@ export interface ApiDocenteDocente extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::estudiante.estudiante'
     >;
+    foto: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -455,7 +457,7 @@ export interface ApiEstudianteEstudiante extends Struct.CollectionTypeSchema {
     singularName: 'estudiante';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     avisos: Schema.Attribute.Relation<'oneToMany', 'api::aviso.aviso'>;
@@ -463,6 +465,8 @@ export interface ApiEstudianteEstudiante extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     docente: Schema.Attribute.Relation<'manyToOne', 'api::docente.docente'>;
+    foto: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.Required;
     grado: Schema.Attribute.String & Schema.Attribute.Required;
     grupo: Schema.Attribute.String & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -492,7 +496,7 @@ export interface ApiPersonasAutorizadaPersonasAutorizada
     singularName: 'personas-autorizada';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     aviso: Schema.Attribute.Relation<'oneToOne', 'api::aviso.aviso'>;
@@ -1018,6 +1022,7 @@ export interface PluginUsersPermissionsUser
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    token: Schema.Attribute.Text & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

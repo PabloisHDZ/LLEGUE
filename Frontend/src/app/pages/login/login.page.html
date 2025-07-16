@@ -1,23 +1,32 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Iniciar Sesión</ion-title>
+  <ion-toolbar style="text-align: center;">
+    <ion-title><b>Inicia Sesión</b></ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding" style="background-color: white;">
-  <ion-card class="login-card">
-    <ion-card-content>
-      <ion-item class="input-item">
-        <ion-label position="floating">Correo</ion-label>
-        <ion-input [(ngModel)]="identifier" type="text" class="input-field"></ion-input>
-      </ion-item>
+<ion-content>
+  <div class="center-container">
+    <ion-card class="login-html">
+      <ion-card-content class="login-form">
 
-      <ion-item class="input-item">
-        <ion-label position="floating">Contraseña</ion-label>
-        <ion-input [(ngModel)]="password" type="password" class="input-field"></ion-input>
-      </ion-item>
+        <img src="assets/12.jpg" alt="Logo" class="login-image" />
+<ion-item class="group input-item" lines="none">
+  <ion-input [(ngModel)]="identifier" type="text" class="input" placeholder="Correo"></ion-input>
+</ion-item>
 
-      <ion-button expand="block" (click)="login()" class="login-button">Entrar</ion-button>
-    </ion-card-content>
-  </ion-card>
+<ion-item class="group input-item" lines="none">
+  <ion-input [(ngModel)]="password" [type]="showPassword ? 'text' : 'password'" class="input" placeholder="Contraseña" data-type="password"></ion-input>
+  <ion-icon slot="end" name="{{ showPassword ? 'eye-off' : 'eye' }}" (click)="togglePasswordVisibility()" style="cursor: pointer;"></ion-icon>
+</ion-item>
+
+
+        <ion-button expand="block" (click)="login()" class="login-button" shape="round" color="dander">ACCEDER</ion-button>
+
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>
+
+
+
+
