@@ -53,4 +53,12 @@ export class LoginPage {
    togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
+  ionViewWillEnter() {
+
+    this.identifier = '';
+    this.password = '';
+    this.showPassword = false;
+  }
+  
+
 }

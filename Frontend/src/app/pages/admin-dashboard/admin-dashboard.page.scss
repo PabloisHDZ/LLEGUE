@@ -1,6 +1,12 @@
- :host {
-    --ion-background-color: transparent;
-  }
+:host {
+  --ion-background-color: transparent; 
+  background-image: linear-gradient(rgba(255, 255, 255, 0.959), rgba(255, 255, 255, 0.897)),
+    url('/assets/1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  
+}
 
   ion-content {
     --padding-start: 0;
@@ -8,19 +14,15 @@
     --padding-top: 0;
     --padding-bottom: 0;
    
-    background-color: white;
+ 
   }
+  
 
   .center-container {
-    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0 15px;
     box-sizing: border-box;
-     margin-top: 250px; /* Ajusta según la altura real del header */
-  /* No uses height 100% aquí, para que crezca con el contenido */
-  padding-bottom: -100px;
   }
 
   .login-html {
@@ -54,27 +56,31 @@
   ion-list {
     background-color: transparent !important;
     padding: 0 10px;
+    
   }
 
   ion-item {
     --background: transparent;
-    border-bottom: 1px solid #b22222;
     padding: 10px 0;
     font-family: 'Montserrat', sans-serif;
   }
 
-  /* Estilos para la info del usuario */
+
   .user-info-col h2 {
     margin: 0 0 5px 0;
     font-weight: 600;
     font-size: 1.2em;
     color: #000;
+    font-family: 'Montserrat', sans-serif;
+
   }
 
   .user-info-col p {
     margin: 2px 0;
     font-size: 0.9em;
     color: #444;
+    font-family: 'Montserrat', sans-serif;
+
   }
 
   ion-toolbar {
@@ -99,7 +105,9 @@
     margin-top: 15px;
     width: 100%;
     text-transform: none !important;
+    font-family: 'Montserrat', sans-serif;
   }
+
 
   ion-button.login-button:hover {
     background: #a81414 !important;
@@ -141,3 +149,5 @@
     --color: #a81414;
     background: rgba(255, 255, 255, 0.1);
   }
+
+  

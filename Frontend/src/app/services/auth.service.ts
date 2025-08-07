@@ -44,7 +44,7 @@ getCurrentUser(): Promise<any> {
             estudiantes: {
               populate: ['foto'] // Foto de cada estudiante del docente
             },
-            foto: true // Foto del docente
+            foto: true 
           }
         },
         personas_autorizada: {
@@ -52,7 +52,7 @@ getCurrentUser(): Promise<any> {
             estudiantes: {
               populate: ['foto'] // Foto de cada estudiante del tutor
             },
-            Credencial: true // Imagen del documento de autorización
+            Credencial: true
           }
         },
         role: true
@@ -61,7 +61,7 @@ getCurrentUser(): Promise<any> {
   }).then(res => {
     const data = res.data;
 
-    // ✅ LOG actualizado para Strapi v5 (sin .attributes)
+    // ✅
     if (
       data.personas_autorizada &&
       Array.isArray(data.personas_autorizada.estudiantes)
@@ -142,9 +142,16 @@ async actualizarRolUsuario(id: string, roleId: number) {
 
 // AuthService
 clearToken() {
-  localStorage.removeItem('token'); // O sessionStorage según donde guardes el token
-  // Opcional: limpiar otros datos relacionados con el usuario
+  localStorage.removeItem('token'); 
+
 }
+
+
+ clearSession() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userRole');
+
+  }
 
 
 }

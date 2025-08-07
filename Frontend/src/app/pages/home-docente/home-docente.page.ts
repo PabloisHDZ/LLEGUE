@@ -67,7 +67,7 @@ export class HomeDocentePage implements OnInit {
 console.log('Docentes:', this.docentes);
 
 
-      // Buscar docente vinculado al usuario actual
+      
      this.docente = loggedUser.docente || null;
 
 
@@ -77,7 +77,6 @@ console.log('Docentes:', this.docentes);
         return;
       }
 
-      // Agrupar estudiantes por grupo y grado
       const grouped: { [key: string]: any[] } = {};
       this.docente.estudiantes.forEach((estudiante: any) => {
         const grado = estudiante.grado || 'Sin Grado';
@@ -87,7 +86,7 @@ console.log('Docentes:', this.docentes);
         grouped[key].push(estudiante);
       });
 
-      // Ordenar claves
+   
       const orderedKeys = Object.keys(grouped).sort((a, b) => a.localeCompare(b));
       const orderedGrouped: { [key: string]: any[] } = {};
       orderedKeys.forEach(k => { orderedGrouped[k] = grouped[k]; });
@@ -107,13 +106,14 @@ console.log('Docentes:', this.docentes);
   if (estudiante?.foto?.url) {
     return `http://localhost:1337${estudiante.foto.url}`;
   }
-  return 'assets/user.jpg'; // Imagen genérica si no hay foto
+  return 'assets/user.jpg'; 
 }
 
 
-  cerrarSesion() {
-    console.log('Cerrar sesión');
-    this.authService.clearToken(); // Elimina token guardado
-    this.router.navigate(['/login']);
-  }
+async cerrarSesion() {
+  console.log('Cerrar sesión');
+  await this.authService.logout(); 
+  this.router.navigate(['/login'], { replaceUrl: true }); 
+}
+
 }

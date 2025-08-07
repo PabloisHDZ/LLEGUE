@@ -66,6 +66,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/ver-estudiantes/ver-estudiantes.module').then( m => m.VerEstudiantesPageModule),
     canActivate: [AuthGuard]
   },
+  {
+    path: 'avisar-llegada',
+    loadChildren: () => import('./pages/avisar-llegada/avisar-llegada.module').then( m => m.AvisarLlegadaPageModule)
+  },
+
 ];
 
 

@@ -1,6 +1,11 @@
-
- :host {
-  --ion-background-color: transparent; 
+:host {
+  --ion-background-color: transparent; /* o quítalo */
+  background-image: linear-gradient(rgba(255, 255, 255, 0.959), rgba(255, 255, 255, 0.897)),
+    url('/assets/1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  
 }
 
   ion-content {
@@ -9,7 +14,7 @@
     --padding-top: 0;
     --padding-bottom: 0;
     height: 100vh;
-     background-color: white;
+     
   }
 
  

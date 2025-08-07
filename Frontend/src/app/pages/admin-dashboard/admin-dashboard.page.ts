@@ -12,14 +12,14 @@ import { Router } from '@angular/router';
 export class AdminDashboardPage implements OnInit {
  token: string | null = null;
 
-  // Variables para usuarios
+
   users: any[] = [];
   errorMessage: string = '';
   roles: any[] = [];
   selectedSegment: 'usuarios' | 'personas' | 'docentes' | 'estudiantes' = 'usuarios';
 
 
-  editingUser: any = null; // usuario que estamos editando
+  editingUser: any = null; 
   showCreateForm: boolean = false;
 
   newUser: any = {
@@ -29,7 +29,7 @@ export class AdminDashboardPage implements OnInit {
     roleId: null
   };
 
-  // Variables para personas autorizadas
+
   personas: any[] = [];
   personaErrorMessage: string = '';
 
@@ -52,7 +52,7 @@ personaEstudiantesIds: number[] = [];
   personaCredencialUrl: string = '';
   personaLoading = false;
 
-  // Variables para estudiantes (nuevo CRUD)
+
   estudiantes: any[] = [];
   estudianteErrorMessage: string = '';
 
@@ -68,8 +68,7 @@ personaEstudiantesIds: number[] = [];
 
   docentes: any[] = [];
 avisos: any[] = [];
-// Ya tienes personas: any[] = []; para personas autorizadas
-// Para editar/crear estudiante
+
 estudianteDocenteId: number | null = null;
 estudiantePersonasAutorizadasIds: number[] = [];
 estudianteAvisosIds: number[] = [];
@@ -86,7 +85,7 @@ docenteDocumentId: string = '';
 
 docenteNombre: string = '';
 
-// En la sección de variables de docentes:
+
 docenteUserId: number | null = null;
 docenteEstudiantesIds: number[] = [];
 docenteFotoUrl: string = '';
@@ -100,17 +99,14 @@ async ngOnInit() {
   this.token = this.authService.getToken();
   await this.loadUsers();
   await this.loadRoles();
-  await this.loadPersonas();      // personas autorizadas
+  await this.loadPersonas();      
   await this.loadDocentes();
   await this.loadAvisos();
   await this.loadEstudiantes();
 }
 
 
-  // Métodos para usuarios
-
-
-
+ 
 
 async loadAvisos() {
   try {
@@ -301,13 +297,13 @@ get filteredEstudiantes() {
 
 
 
- cerrarSesion() {
+async cerrarSesion() {
   console.log('Cerrar sesión');
-  this.authService.clearToken(); // Método que elimina el token guardado
-  this.router.navigate(['/login']);
+  await this.authService.logout(); 
+  this.router.navigate(['/login'], { replaceUrl: true }); 
 }
 
-  // Métodos para personas autorizadas
+
 
   async loadPersonas() {
     this.personaErrorMessage = '';
@@ -324,7 +320,7 @@ get filteredEstudiantes() {
       }
 
       this.personas = res.data.data.map((item: any) => {
-      const p = item.attributes || item; // según estructura
+      const p = item.attributes || item; 
   return {
         id: item.id,
         documentId: item.documentId,
@@ -523,7 +519,7 @@ this.personaEstudiantesIds = persona.estudiantes?.map((e: any) => e.id) || [];
   }
 
 
-  // Métodos para estudiantes (nuevo CRUD)
+
 
 async loadEstudiantes() {
   this.estudianteErrorMessage = '';
@@ -533,7 +529,7 @@ async loadEstudiantes() {
       headers: { Authorization: `Bearer ${this.token}` }
     });
 
-    console.log('Respuesta estudiantes:', res.data); // <-- Agrega este log para inspección
+    console.log('Respuesta estudiantes:', res.data); 
 
     if (!Array.isArray(res.data.data)) {
       this.estudianteErrorMessage = 'La respuesta no es un arreglo';
@@ -541,9 +537,9 @@ async loadEstudiantes() {
       return;
     }
 
-    // Ajusta según la estructura real
+   
     this.estudiantes = res.data.data.map((item: any) => {
-      // Si tienes attributes:
+     
       if(item.attributes){
         return {
           id: item.id,
@@ -553,7 +549,7 @@ async loadEstudiantes() {
           grupo: item.attributes.grupo
         };
       }
-      // Si no tienes attributes:
+   
       return {
         id: item.id,
         documentId: item.documentId,
@@ -626,7 +622,7 @@ async loadEstudiantes() {
   }
 }
 
-  // Cambiar startEditEstudiante para que solo reciba el estudiante y asigne documentId
+  
 startEditEstudiante(estudiante: any) {
   this.estudianteId = estudiante.id;
   this.estudianteDocumentId = estudiante.documentId;
@@ -635,7 +631,7 @@ startEditEstudiante(estudiante: any) {
   this.estudianteGrado = estudiante.grado;
   this.estudianteGrupo = estudiante.grupo;
 
-  // Asignar docente, personas autorizadas y avisos si vienen en el objeto estudiante
+
   this.estudianteDocenteId = estudiante.docente?.id || null;
   this.estudiantePersonasAutorizadasIds = estudiante.personas_autorizadas ? estudiante.personas_autorizadas.map((p: any) => p.id) : [];
   this.estudianteAvisosIds = estudiante.avisos ? estudiante.avisos.map((a: any) => a.id) : [];
@@ -645,7 +641,7 @@ startEditEstudiante(estudiante: any) {
 }
 
 
-// Cambiar editarEstudiante para usar documentId en la URL
+
 async editarEstudiante() {
   if (!this.estudianteDocumentId) {
     alert('Error: documentId es obligatorio para editar.');
@@ -709,21 +705,21 @@ async editarEstudiante() {
   this.docenteNombre = '';
 }
 
-// Mostrar formulario crear docente
+
 startCreateDocente() {
   this.resetDocenteForm();
   this.showCreateDocenteForm = true;
   this.showEditDocenteForm = false;
 }
 
-// Cancelar formulario docente
+
 cancelDocenteForm() {
   this.resetDocenteForm();
   this.showCreateDocenteForm = false;
   this.showEditDocenteForm = false;
 }
 
-// Cargar docentes
+
 async loadDocentes() {
   this.docenteErrorMessage = '';
   try {
@@ -739,7 +735,7 @@ async loadDocentes() {
     }
 
     this.docentes = res.data.data.map((item: any) => {
-      const d = item.attributes || item; // según estructura
+      const d = item.attributes || item; 
       return {
         id: item.id,
         documentId: d.documentId,
@@ -771,13 +767,13 @@ onDocenteFileSelected(event: any) {
 
 
 
-// Iniciar edición docente
+
 startEditDocente(docente: any) {
   this.docenteId = docente.id;
   this.docenteDocumentId = docente.documentId;
   this.docenteNombre = docente.nombre || '';
 
-  // Cargar usuarios, estudiantes y foto si vienen en el objeto docente
+
   this.docenteUserId = docente.users_permissions_user?.id || null;
   this.docenteEstudiantesIds = docente.estudiantes ? docente.estudiantes.map((e: any) => e.id) : [];
   this.docenteFotoUrl = docente.foto?.url ? 'http://localhost:1337' + docente.foto.url : '';
@@ -888,7 +884,7 @@ async editarDocente() {
 }
 
 
-// Eliminar docente
+
 async deleteDocente(documentId: string) {
   if (!documentId) {
     alert('ID inválido para eliminar docente');

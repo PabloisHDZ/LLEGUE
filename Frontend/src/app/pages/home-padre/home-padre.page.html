@@ -1,35 +1,41 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title style="color: rgb(255, 255, 255);">Persona Autorizada: {{personaAutorizada?.nombre || 'Cargando...'}}</ion-title>
+  <ion-toolbar style="text-align: center;">
+    <br>
+    <ion-title style="color: white; font-family: 'Montserrat', sans-serif;">Estudiantes Asignados</ion-title>
     <button class="btn btn-danger" style="float: right; padding: 6px; font-size: 14px; background-color: transparent; filter: invert();" (click)="cerrarSesion()" aria-label="Cerrar sesión">
       <img src="assets/93627.png" alt="Logo" width="16" height="16" />
-    </button>
+    </button> 
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <!-- Spinner centrado mientras carga -->
+ 
   <div class="center-container" *ngIf="loading">
     <ion-spinner name="crescent"></ion-spinner>
   </div>
 
-  <!-- Mensaje de error centrado -->
+
   <div *ngIf="error" class="center-container">
     <div class="login-html">
       <p class="label" style="color: #6e0000;">{{ error }}</p>
     </div>
   </div>
 
-  <!-- Contenido principal centrado -->
+
   <div class="center-container" *ngIf="!loading && !error">
     <div class="login-html">
-      <!-- No se encontró persona autorizada -->
+
       <div *ngIf="!personaAutorizada">
         <p class="label" style="color: #6e0000;">No se encontró la persona autorizada</p>
       </div>
+ 
+    <h1 style="color: #6e0000; font-family: 'Montserrat', sans-serif; text-align: center;"> <b>Persona Autorizada: </b> <span style="color: black; font-family: 'Montserrat', sans-serif;"> {{personaAutorizada?.nombre || 'Cargando...'}} </span></h1>
 
-      <!-- Mostrar persona autorizada y estudiantes -->
+
+     
       <div *ngIf="personaAutorizada">
+      
+
         <div *ngFor="let grupo of estudiantesGrouped | keyvalue">
           <h3 style="color: #6e0000; margin-bottom: 10px;">{{ grupo.key }}</h3>
 
@@ -43,6 +49,10 @@
     <p style="color: #333;">Grado: {{ estudiante.grado || 'N/A' }}</p>
     <p style="color: #333;">Grupo: {{ estudiante.grupo || 'N/A' }}</p>
   </ion-label>
+  <ion-button color="primary" >
+  Ya llegué
+</ion-button>
+
 </ion-item>
 
           </ion-list>
@@ -51,3 +61,4 @@
     </div>
   </div>
 </ion-content>
+

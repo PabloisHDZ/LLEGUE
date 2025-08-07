@@ -101,16 +101,17 @@ export class HomePadrePage implements OnInit {
     }
   }
 
-  cerrarSesion() {
-    console.log('Cerrar sesión');
-    this.authService.clearToken(); // Elimina token guardado
-    this.router.navigate(['/login']);
-  }
+async cerrarSesion() {
+  console.log('Cerrar sesión');
+  await this.authService.logout(); 
+  this.router.navigate(['/login'], { replaceUrl: true }); 
+}
+
 getFotoUrl(estudiante: any): string {
   if (estudiante?.foto?.url) {
     return `http://localhost:1337${estudiante.foto.url}`;
   }
-  return 'assets/user.jpg'; // Imagen genérica si no hay foto
+  return 'assets/user.jpg'; 
 }
 
 

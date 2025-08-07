@@ -5,6 +5,7 @@ import { PersonasAutorizadasService } from '../services/personas-autorizadas.ser
 import { DocentesService } from '../services/docentes.service';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -16,18 +17,18 @@ export class HomePage implements OnInit {
   
     userRole: string | null = null;
 
-  // --- Persona Autorizada ---
+  
   estudiantesAsignados: any[] = [];
-  personaAutorizadaActiva: boolean = true; // Puedes obtener esto desde backend
+  personaAutorizadaActiva: boolean = true; 
 
-  // --- Docente ---
+  
   estudiantesDocente: any[] = [];
   docentes: any[]=[];
   historialEntregas: any[] = [];
   filtroEstudianteId: string = '';
   historialEntregasFiltrado: any[] = [];
 
-  // --- Administrador ---
+
   usuarios: any[] = [];
   avisosActivos: any[] = [];
   avisosFiltrados: any[] = [];
@@ -39,7 +40,6 @@ export class HomePage implements OnInit {
  token: string | null = '';
 
 
-  // Mapa de roles para mostrar nombre basado en roleId
   rolesMap: { [key: number]: string } = {
     1: 'Administrador',
     2: 'Docente',
@@ -75,13 +75,13 @@ export class HomePage implements OnInit {
   this.estudiantesAsignados = (await this.estudianteService.getEstudiantesPorPersonaAutorizada()) ?? [];
 
 
-    // Aquí deberías obtener si la persona autorizada está activa
-    this.personaAutorizadaActiva = true; // Ejemplo, reemplaza con llamada real
+  
+    this.personaAutorizadaActiva = true; 
   }
 
 
 
-// --- Funciones para Docente ---
+
 
 async cargarDatosDocente() {
   this.estudiantesDocente = (await this.estudianteService.getEstudiantesPorDocente()) ?? [];
@@ -90,7 +90,7 @@ async cargarDatosDocente() {
   this.historialEntregasFiltrado = [...this.historialEntregas];
 }
 
-// --- Funciones para Administrador ---
+
 
 async cargarDatosAdministrador() {
   this.usuarios = (await this.authService.getUsuarios()) ?? [];
@@ -167,9 +167,12 @@ async cargarDocentes() {
 
 
 
-  cerrarSesion() {
+async cerrarSesion() {
   console.log('Cerrar sesión');
-  this.authService.clearToken(); // Método que elimina el token guardado
-  this.router.navigate(['/login']);
+  await this.authService.logout(); 
+  this.router.navigate(['/login'], { replaceUrl: true }); 
 }
+
+
+
 }

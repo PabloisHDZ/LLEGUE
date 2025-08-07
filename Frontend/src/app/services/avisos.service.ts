@@ -53,4 +53,9 @@ getDispositivosRegistrados(): Promise<any[]> {
   eliminarDispositivo(dispositivoId: string): Promise<any> {
     return this.http.delete<any>(`${this.baseUrl}/dispositivos/${dispositivoId}`).toPromise();
   }
+   crearAvisos(datosAviso: any) {
+    return this.http.post(`${this.baseUrl}`, {
+      data: datosAviso
+    });}
+
 }

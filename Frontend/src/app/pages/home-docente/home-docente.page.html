@@ -1,6 +1,7 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title style="color: rgb(255, 255, 255);">Docente: {{ docente?.nombre || 'Cargando...' }}</ion-title>
+  <ion-toolbar style="text-align: center;">
+    <br>
+    <ion-title style="color: white; font-family: 'Montserrat', sans-serif;">Estudiantes Asignados</ion-title>
     <button class="btn btn-danger" style="float: right; padding: 6px; font-size: 14px; background-color: transparent; filter: invert();" (click)="cerrarSesion()" aria-label="Cerrar sesión">
       <img src="assets/93627.png" alt="Logo" width="16" height="16" />
     </button>
@@ -8,27 +9,27 @@
 </ion-header>
 
 <ion-content>
-  <!-- Spinner centrado mientras carga -->
   <div class="center-container" *ngIf="loading">
     <ion-spinner name="crescent"></ion-spinner>
   </div>
 
-  <!-- Mensaje de error centrado -->
+ 
   <div *ngIf="error" class="center-container">
     <div class="login-html">
       <p class="label" style="color: #6e0000;">{{ error }}</p>
     </div>
   </div>
 
-  <!-- Contenido principal centrado -->
+
   <div class="center-container" *ngIf="!loading && !error">
     <div class="login-html">
-      <!-- No se encontró docente -->
       <div *ngIf="!docente">
         <p class="label" style="color: #6e0000;">No se encontró el docente.</p>
       </div>
 
-      <!-- Mostrar docente y estudiantes -->
+   
+    <h1 style="color: #6e0000; font-family: 'Montserrat', sans-serif;"> <b>Docente:</b> <span style="color: black; font-family: 'Montserrat', sans-serif;"> {{ docente?.nombre || 'Cargando...' }} </span></h1>
+
       <div *ngIf="docente">
         <div *ngFor="let grupo of estudiantesGrouped | keyvalue">
           <h3 style="color: #6e0000; margin-bottom: 10px;">{{ grupo.key }}</h3>
