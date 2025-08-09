@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Historial de Avisos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="!cargando; else cargandoTemplate">
+  <ion-list *ngIf="avisos.length > 0; else sinAvisos">
+    <ion-item *ngFor="let aviso of avisos">
+      <ion-label>
+      <h2>{{ aviso.titulo }}</h2>
+      <p>{{ aviso.mensaje }}</p>
+      <p>Estado: {{ aviso.estado }}</p>
+      <p>Estudiante: {{ aviso.estudiante || 'No disponible' }}</p>
+<p>Autorizado por: {{ aviso.persona_autorizada || 'No disponible' }}</p>
+      <p>Fecha de Llegada: {{ aviso.createdAt | date: 'medium' }}</p>
+      <p *ngIf="aviso.fechaEntrega">Fecha de Entrega: {{ aviso.fechaEntrega | date: 'medium' }}</p>
+      <p *ngIf="!aviso.fechaEntrega">Fecha de Entrega: No entregado aún</p>
+    </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ng-template #sinAvisos>
+    <ion-text color="medium" class="ion-text-center">
+      No tienes avisos enviados aún.
+    </ion-text>
+  </ng-template>
+</ion-content>
+
+<ng-template #cargandoTemplate>
+  <ion-spinner name="dots"></ion-spinner>
+</ng-template>

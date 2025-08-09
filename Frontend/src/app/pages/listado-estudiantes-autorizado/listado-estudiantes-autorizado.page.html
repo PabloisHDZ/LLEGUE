@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Estudiantes Asignados</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let estudiante of estudiantes">
+      {{ estudiante.nombre }} - {{ estudiante.grado }}
+    </ion-item>
+  </ion-list>
+</ion-content>

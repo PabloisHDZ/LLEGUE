@@ -1,0 +1,82 @@
+:host {
+    --ion-background-color: transparent;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.959), rgba(255, 255, 255, 0.897)),
+      url('/assets/1.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  ion-content {
+    --padding-start: 0;
+    --padding-end: 0;
+    --padding-top: 0;
+    --padding-bottom: 0;
+  }
+
+  .center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    height: 100%;
+ 
+
+  }
+
+  .login-html {
+    max-width: 525px;
+    width: 100%;
+    min-height: 570px;
+    background-color: white;
+    box-shadow: 0 12px 15px 0 rgb(56, 53, 53), 0 17px 50px 0 rgba(0,0,0,.19);
+    border-radius: 15px;
+    overflow: hidden;
+    width: 200%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(255, 255, 255, 0.9);
+    padding: 60px 40px 40px 40px;
+    color: #000;
+    box-sizing: border-box;
+    border-radius: 15px;
+  }
+
+  
+
+  ion-item.input-item {
+    --border-color: rgba(255, 255, 255, 0.3);
+    --border-style: solid;
+    --background: white;
+    --background-color: rgb(124, 0, 0);
+    --border-width: 1px;
+    --border-radius: 10px;
+    --padding-start: 20px;
+    --padding-end: 20px;
+    --min-height: 50px;
+    --transform-style: preserve-3d;
+    margin-top: 25px;
+    width: 96%;
+    margin-bottom: 25px;
+    color: #000;
+    border: 2px;
+    border-width: 5px;
+    border-radius: 10px;
+    --box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4), 0 4px 6px rgba(0, 0, 0, 0.3);
+    --text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    --transform: translateZ(10px);
+    --transition: box-shadow 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 12px 25px rgba(77, 0, 0, 0.6), 0 6px 10px rgba(105, 1, 1, 0.4);
+    transform: translateZ(10px);
+  }
+
+  ion-item.input-item:hover {
+    box-shadow: 0 12px 25px rgba(77, 0, 0, 0.6), 0 6px 10px rgba(105, 1, 1, 0.4);
+    transform: translateZ(10px);
+  
+
+  }

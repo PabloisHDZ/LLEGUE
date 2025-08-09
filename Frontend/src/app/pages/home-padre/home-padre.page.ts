@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import axios from 'axios';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { AvisosService } from 'src/app/services/avisos.service';
+import { lastValueFrom } from 'rxjs';
+
 
 @Component({
   selector: 'app-home-padre',
@@ -17,9 +20,13 @@ export class HomePadrePage implements OnInit {
   token: string | null = null;
   loading: boolean = false;
   personaAutorizadaErrorMessage: string = '';
+estudiantePersonasAutorizadasIds: number[] = [];
+personaEstudiantesIds: number[] = [];
 
 
-  constructor(private authService: AuthService, private router: Router) {}
+
+
+  constructor(private authService: AuthService, private router: Router, private avisosService: AvisosService) {}
 
   async ngOnInit() {
     this.token = this.authService.getToken();
@@ -114,6 +121,53 @@ getFotoUrl(estudiante: any): string {
   return 'assets/user.jpg'; 
 }
 
+/* enviarAviso(estudiante: any) {
+  const aviso = {
+    estudiante: estudiante.id, // o cualquier otro campo necesario
+    mensaje: 'El estudiante ha llegado',
+    fecha: new Date().toISOString()
+  };
 
+  this.avisosService.crearAviso(aviso).subscribe({
+    next: () => {
+      console.log('Aviso enviado con éxito');
+      // aquí podrías mostrar un mensaje de éxito o actualizar historial
+    },
+    error: (err) => {
+      console.error('Error al enviar aviso:', err);
+    }
+  }); */
+
+async crearAvisoParaEstudiante(estudiante: any, personaAutorizada: any) {
+  if (!estudiante || !personaAutorizada) {
+    alert('Faltan datos para crear el aviso');
+    return;
+  }
+
+  const now = new Date().toISOString();
+
+  const dataToSend = {
+    data: {
+      fecha_hora: now,
+      estado_estudiante: 'Pendiente, ', // Asegúrate que 'Pendiente' sea un valor válido en la enumeración
+      personas_autorizada: personaAutorizada.id, // Nota el plural 'personas_autorizada'
+      estudiante: estudiante.id,
+      // Puedes agregar más campos si tu modelo los requiere
+    }
+  };
+
+  try {
+    await lastValueFrom(this.avisosService.crearAviso(dataToSend));
+    alert(`Aviso creado para estudiante ${estudiante.nombre}`);
+  } catch (error: any) {
+    console.error('Error creando aviso:', error);
+    alert('Error al crear aviso: ' + (error.message || JSON.stringify(error)));
+  }
+}
 
 }
+
+
+
+
+

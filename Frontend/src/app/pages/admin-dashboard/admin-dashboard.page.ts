@@ -589,6 +589,12 @@ async loadEstudiantes() {
     this.showEditEstudianteForm = false;
   }
 
+
+
+
+
+
+
   async crearEstudiante() {
   if (!this.estudianteNombre || !this.estudianteGrado || !this.estudianteGrupo) {
     alert('Por favor, completa todos los campos');
@@ -621,6 +627,16 @@ async loadEstudiantes() {
     alert('Error al crear estudiante: ' + (error.response?.data?.message || error.message));
   }
 }
+
+
+
+
+
+
+
+
+
+
 
   
 startEditEstudiante(estudiante: any) {

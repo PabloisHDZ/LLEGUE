@@ -70,6 +70,39 @@ const routes: Routes = [
     path: 'avisar-llegada',
     loadChildren: () => import('./pages/avisar-llegada/avisar-llegada.module').then( m => m.AvisarLlegadaPageModule)
   },
+  {
+    path: 'listado-estudiantes-autorizado',
+    loadChildren: () => import('./pages/listado-estudiantes-autorizado/listado-estudiantes-autorizado.module').then( m => m.ListadoEstudiantesAutorizadoPageModule)
+  },
+  {
+  path: 'historial-avisos-autorizado',
+  loadChildren: () => import('./pages/historial-avisos-autorizado/historial-avisos-autorizado.module').then(m => m.HistorialAvisosAutorizadoPageModule)
+},
+
+    {
+  path: 'historial-avisos',
+  loadComponent: () => import('./pages/historial-avisos-autorizado/historial-avisos-autorizado.page').then(m => m.HistorialAvisosAutorizadoPage)
+},
+
+  {
+    path: 'alertas-autorizado',
+    loadChildren: () => import('./pages/alertas-autorizado/alertas-autorizado.module').then( m => m.AlertasAutorizadoPageModule)
+  },
+  {
+    path: 'perfil-autorizado',
+    loadChildren: () => import('./pages/perfil-autorizado/perfil-autorizado.module').then( m => m.PerfilAutorizadoPageModule)
+  },
+  {
+    path: 'listado-estudiantes-autorizado.page.ts',
+loadChildren: () => import('./pages/listado-estudiantes-autorizado/listado-estudiantes-autorizado.module')
+  .then(m => m.ListadoEstudiantesAutorizadoPageModule)
+  },  {
+    path: 'historial-avisos-docente',
+    loadChildren: () => import('./pages/historial-avisos-docente/historial-avisos-docente.module').then( m => m.HistorialAvisosDocentePageModule)
+  },
+
+
+
 
 ];
 

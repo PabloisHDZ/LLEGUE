@@ -36,6 +36,7 @@
 </div>
 
 
+<!-------------------------------------------------------------------------------------------------------------------->
 
 
 <div *ngIf="userRole === 'Docente'" class="container authorized-person">
@@ -62,7 +63,7 @@
         </ion-button></ion-col>
 
          <ion-col size="12" size-md="auto" size-lg="auto">
-           <ion-button expand="block" routerLink="/home-docente">
+           <ion-button expand="block" routerLink="/historial-avisos-docente">
           Alertas en tiempo real
         </ion-button></ion-col>
 
@@ -79,7 +80,7 @@
   </ion-grid>
 </div>
 
-
+<!-----------------------------------------AUTORIZADA--------------------------------------------------------------------------->
 
 <div *ngIf="userRole === 'Persona Autorizada'" class="container authorized-person">
 
@@ -100,9 +101,10 @@
         </ion-button></ion-col>
 
          <ion-col size="12" size-md="auto" size-lg="auto">
-        <ion-button expand="full" routerLink="/home-docente">
-          Historial de Avisos
-        </ion-button></ion-col>
+        <ion-button expand="full" routerLink="/historial-avisos-autorizado">
+  Historial de Avisos
+</ion-button>
+</ion-col>
 
          <ion-col size="12" size-md="auto" size-lg="auto">
            <ion-button expand="full" routerLink="/home-docente">

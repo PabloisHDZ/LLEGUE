@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar style="text-align: center; --background: #6e0000 !important; justify-content: center; align-items: center;">
+    <ion-title style="color: white; font-family: 'Montserrat', sans-serif;">Historial de Avisos Docente</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="!cargando; else cargandoTemplate" style="--padding-start: 0; --padding-end: 0; --padding-top: 0; --padding-bottom: 0;">
+
+  <div class="center-container" *ngIf="!cargando && avisos.length > 0; else sinAvisos">
+    <div class="login-html" style="padding: 40px 30px;">
+      <ion-list style="background-color: white; border-radius: 15px; box-shadow: 0 12px 15px rgba(56, 53, 53, 0.5), 0 17px 50px rgba(0,0,0,0.19); width: 100%;">
+        <ion-item class="input-item" *ngFor="let aviso of avisos" style="margin: 20px 10px; border-radius: 10px;">
+          <ion-label>
+            <h2 style="color: #6e0000; font-family: 'Montserrat', sans-serif;">{{ aviso.titulo }}</h2>
+            <p style="color: #333;">{{ aviso.mensaje }}</p>
+            <p style="color: #333;">Estado: {{ aviso.estado }}</p>
+            <p style="color: #333;">Estudiante: {{ aviso.estudiante || 'No disponible' }}</p>
+            <p style="color: #333;">Autorizado por: {{ aviso.persona_autorizada || 'No disponible' }}</p>
+            <p style="color: #333;">Fecha de Llegada: {{ aviso.createdAt | date: 'medium' }}</p>
+            <p *ngIf="aviso.fechaEntrega" style="color: #333;">Fecha de Entrega: {{ aviso.fechaEntrega | date: 'medium' }}</p>
+            <p *ngIf="!aviso.fechaEntrega" style="color: #333;">Fecha de Entrega: No entregado aún</p>
+          </ion-label>
+
+      <ion-button
+  slot="end"
+  color="success"
+  (click)="marcarEntregado(aviso)"
+  [disabled]="aviso.estado === 'Entregado' || cargandoActualizarId === aviso.id"
+>
+  <ion-spinner *ngIf="cargandoActualizarId === aviso.id" name="crescent" style="width: 20px; height: 20px;"></ion-spinner>
+  <span *ngIf="cargandoActualizarId !== aviso.id">Entregado</span>
+</ion-button>
+
+
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+
+</ion-content>
+
+<ng-template #sinAvisos>
+  <div class="center-container" style="height: 100%;">
+    <ion-text color="medium" class="ion-text-center" style="font-family: 'Montserrat', sans-serif;">
+      No tienes avisos enviados aún.
+    </ion-text>
+  </div>
+</ng-template>
+
+<ng-template #cargandoTemplate>
+  <div class="center-container" style="height: 100%;">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+</ng-template>
+
